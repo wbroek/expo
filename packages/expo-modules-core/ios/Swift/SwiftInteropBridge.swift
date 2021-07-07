@@ -22,7 +22,7 @@ public class SwiftInteropBridge: NSObject {
                          withArgs args: [Any],
                          resolve: @escaping EXPromiseResolveBlock,
                          reject: @escaping EXPromiseRejectBlock) {
-    let promise = Promise(resolve: resolve, reject: reject)
+    let promise = Promise(_resolve: resolve, _reject: reject)
     registry
       .get(moduleHolderForName: moduleName)?
       .call(method: methodName, args: args, promise: promise)

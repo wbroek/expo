@@ -3,14 +3,22 @@ public struct Promise: AnyMethodArgument {
   public typealias ResolveClosure = (Any?) -> Void
   public typealias RejectClosure = (String, String, Error?) -> Void
 
-  public var resolve: ResolveClosure
-  public var reject: RejectClosure
+  public var _resolve: ResolveClosure
+  public var _reject: RejectClosure
 
-  public func reject(_ description: String, _ error: Error? = nil) -> Void {
-    reject("ERR", description, error)
+  public func resolve(_ value: Any? = nil) {
+    _resolve(value)
+  }
+
+  public func reject(_ code: String, _ description: String, _ error: Error? = nil) {
+    _reject(code, description, error)
+  }
+
+  public func reject(_ description: String, _ error: Error? = nil) {
+    _reject("ERR", description, error)
   }
 
   public func reject(_ error: Error) -> Void {
-    reject("ERR", error.localizedDescription, error)
+    _reject("ERR", error.localizedDescription, error)
   }
 }
