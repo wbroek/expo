@@ -162,4 +162,12 @@ extension AnyModule {
       closure
     )
   }
+
+  public func onClientAppBackgrounded(_ listener: @escaping () -> Void) -> AnyDefinition {
+    return EventListener(.clientAppBackgrounded, listener: listener)
+  }
+
+  public func onClientAppForegrounded(_ listener: @escaping () -> Void) -> AnyDefinition {
+    return EventListener(.clientAppForegrounded, listener: listener)
+  }
 }

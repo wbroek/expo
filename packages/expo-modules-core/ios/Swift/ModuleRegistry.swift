@@ -46,4 +46,24 @@ public class ModuleRegistry: Sequence {
   public func makeIterator() -> IndexingIterator<[ModuleHolder]> {
     return registry.map({ $1 }).makeIterator()
   }
+
+  internal func post(event: EventName) {
+    forEach {
+      $0.definition.eventListeners.forEach { eventListener in
+        if eventListener.name == event {
+          eventListener.call(nil)
+        }
+      }
+    }
+  }
+
+  internal func post<PayloadType>(event: EventName, payload: PayloadType?) {
+    forEach {
+      $0.definition.eventListeners.forEach { eventListener in
+        if eventListener.name == event {
+          eventListener.call(payload)
+        }
+      }
+    }
+  }
 }
